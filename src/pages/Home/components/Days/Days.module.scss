@@ -61,7 +61,6 @@
 .tabs {
 	display: flex;
 	justify-content: space-between;
-
 	margin-bottom: 7px;
 }
 
@@ -79,6 +78,10 @@
 	justify-content: center;
 	margin-right: 15px;
 	cursor: pointer;
+}
+.tab.active {
+	background: $primary-color;
+	color: #fff;
 }
 
 .cancel {

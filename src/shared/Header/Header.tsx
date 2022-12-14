@@ -1,20 +1,24 @@
-
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { GlobalSvgSelector } from '../../assets/icons/global/GlobalSvgSelector';
 import { Theme } from '../../context/ThemeContext';
+import { useCustomDispatch } from '../../hooks/store';
 import { useTheme } from '../../hooks/useTheme';
+import { fetchCurrentWeather } from '../../store/thunks/fetchCurrentWeather';
 import s from './Header.module.scss';
 
 interface Props {}
 
 export const Header = (props: Props) => {
 	const theme = useTheme();
-	const options = [
-		{ value: 'city-1', label: 'Санкт-Петербург' },
-		{ value: 'city-2', label: 'Москва' },
-		{ value: 'city-3', label: 'Новгород' },
-	];
+	const dispatch = useCustomDispatch();
+	const [city, setCity] = useState<string>('');
+	const search = (evt: { key: string }) => {
+		if (evt.key === 'Enter') {
+			dispatch(fetchCurrentWeather(city));
+			setCity('');
+		}
+	};
 
 	const colourStyles = {
 		control: (styles: any) => ({
@@ -46,15 +50,24 @@ export const Header = (props: Props) => {
 				<div className={s.title}>React weather</div>
 			</div>
 			<div className={s.wrapper}>
+				<div className={s.search}>
+					<input
+						className={s.searchBar}
+						type="text"
+						placeholder="Поиск..."
+						onChange={(e) => setCity(e.target.value)}
+						value={city}
+						onKeyPress={search}
+					/>
+				</div>
+
 				<div className={s.change_theme} onClick={changeTheme}>
 					<GlobalSvgSelector id="change-theme" />
 				</div>
-				<Select
-					defaultValue={options[0]}
-					styles={colourStyles}
-					options={options}
-				/>
 			</div>
 		</header>
 	);
 };
+function getCurrentWeather(city: string) {
+	throw new Error('Function not implemented.');
+}

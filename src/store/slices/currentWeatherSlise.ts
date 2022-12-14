@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { Weather } from '../types/Types';
 
@@ -13,13 +13,22 @@ type Response = {
 	message: string;
 };
 
-const initialState = {
-	weather: {},
+
+
+const initialState: CurrentWeather = {
+	weather: {
+		main: {
+			temp: 0,
+			pressure: 0,
+		},
+		name: '',
+	},
 	isLoading: false,
 	response: {
 		status: 0,
 		message: '',
 	},
+	
 };
 
 export const CurrentWeatherSlice = createSlice({
