@@ -5,34 +5,14 @@ import s from './Days.module.scss';
 interface Props {}
 
 export const Tabs = (props: Props) => {
-	const tabs = [
-		{
-			value: 'На неделю',
-		},
-		{
-			value: 'На 10 дней',
-		},
-		{
-			value: 'На месяц',
-		},
-	];
 	const [popupActive, setPopupActive] = useState(false);
 	return (
 		<>
 			<Popup active={popupActive} setActive={setPopupActive} />
 			<div className={s.tabs}>
 				<button className={s.tab} onClick={() => setPopupActive(true)}>
-					open popup
+					На месяц
 				</button>
-
-				<div className={s.tabs__wrapper}>
-					{tabs.map((tab) => (
-						<div className={s.tab} key={tab.value}>
-							{tab.value}
-						</div>
-					))}
-				</div>
-				<div className={s.cancel}>Отменить</div>
 			</div>
 		</>
 	);

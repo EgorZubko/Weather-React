@@ -1,11 +1,25 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { Weather } from '../types/Types';
+import {
+	City,
+	CurrentList,
+	Main,
+	Wind,
+	CurrentData,
+	Icons,
+	List,
+} from '../types/Types';
 
 type CurrentWeather = {
-	weather: Weather;
+	currentList: CurrentList;
+	main: Main;
+	wind: Wind;
+	city: City;
+	currentData: CurrentData;
 	isLoading: boolean;
 	response: Response;
+	icons: Icons;
+	list: List;
 };
 
 type Response = {
@@ -13,26 +27,44 @@ type Response = {
 	message: string;
 };
 
-
-
 const initialState: CurrentWeather = {
-	weather: {
-		main: {
-			temp: 0,
-			pressure: 0,
-		},
+	currentList: {
+		temp: 0,
+		pressure: 0,
+	},
+
+	main: {
+		temp: 0,
+		pressure: 0,
+		feels_like: 0,
+		speed: 0,
+		name: '',
+		dt_txt: 0,
+	},
+	wind: {
+		speed: 0,
+	},
+	city: {
 		name: '',
 	},
+
+	currentData: {
+		dt_txt: 0,
+	},
+
 	isLoading: false,
 	response: {
 		status: 0,
 		message: '',
 	},
-	
+	icons: {
+		list: { weather: { icon: '' } },
+	},
+	list: [],
 };
 
-export const CurrentWeatherSlice = createSlice({
-	name: 'current_weather',
+export const currentWeatherSlice = createSlice({
+	name: 'currentWeather',
 	initialState,
 	reducers: {
 		fetchCurrentWeather(state) {
@@ -40,9 +72,14 @@ export const CurrentWeatherSlice = createSlice({
 		},
 		fetchCurrentWeatherSucceess(
 			state,
-			action: PayloadAction<AxiosResponse<Weather>>
+			action: PayloadAction<AxiosResponse<Main>>
 		) {
-			state.weather = action.payload.data;
+			state.main = action.payload.data.list[0].main;
+			state.currentList = action.payload.data;
+			state.wind = action.payload.data.list[0].wind;
+			state.city = action.payload.data.city;
+			state.icons = action.payload.data.list[0].weather[0].icon;
+			state.list = action.payload.data.list;
 			state.isLoading = false;
 			state.response = {
 				status: action.payload.status,
@@ -51,7 +88,7 @@ export const CurrentWeatherSlice = createSlice({
 		},
 		fetchCurrentWeatherError(
 			state,
-			action: PayloadAction<AxiosResponse<Weather>>
+			action: PayloadAction<AxiosResponse<Main>>
 		) {
 			state.isLoading = false;
 			state.response = {
@@ -62,4 +99,4 @@ export const CurrentWeatherSlice = createSlice({
 	},
 });
 
-export default CurrentWeatherSlice.reducer;
+export default currentWeatherSlice.reducer;

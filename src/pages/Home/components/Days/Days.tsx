@@ -1,4 +1,6 @@
-import React from 'react';
+import moment from 'moment';
+import React, { ReactNode } from 'react';
+import { useCustomSelector } from '../../../../hooks/store';
 import { Card } from './Card';
 
 import s from './Days.module.scss';
@@ -7,79 +9,35 @@ import { Tabs } from './Tabs';
 interface Props {}
 
 export interface Day {
+	date: ReactNode;
+	weekdayName: ReactNode;
+	dt_txt: ReactNode;
+	icon: any;
+	weather: any;
+	main: any;
+	dt: number;
 	day: string;
 	day_info: string;
-	icon_id: string;
 	temp_day: string;
 	temp_night: string;
 	info: string;
+	description: string;
 }
 
-export const Days = (props: Props) => {
-	const days: Day[] = [
-		{
-			day: 'Сегодня',
-			day_info: '28 авг',
-			icon_id: 'sun',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'Облачно',
-		},
-		{
-			day: 'Завтра',
-			day_info: '29 авг',
-			icon_id: 'small_rain_sun',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'небольшой дождь и солнце',
-		},
-		{
-			day: 'Ср',
-			day_info: '30 авг',
-			icon_id: 'small_rain',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'небольшой дождь',
-		},
-		{
-			day: 'Чт',
-			day_info: '28 авг',
-			icon_id: 'mainly_cloudy',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'Облачно',
-		},
-		{
-			day: 'Пт',
-			day_info: '28 авг',
-			icon_id: 'rain',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'Облачно',
-		},
-		{
-			day: 'Сб',
-			day_info: '28 авг',
-			icon_id: 'sun',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'Облачно',
-		},
-		{
-			day: 'Вс',
-			day_info: '28 авг',
-			icon_id: 'sun',
-			temp_day: '+18',
-			temp_night: '+15',
-			info: 'Облачно',
-		},
-	];
+export const Days = ({}: Props) => {
+	const date = moment().format('D MMM');
+	const list = useCustomSelector((state) =>
+		state.currentWeather.list.filter((day: any, index: number) => {
+			return index % 8 === 0;
+		})
+	);
+
 	return (
 		<>
 			<Tabs />
 			<div className={s.days}>
-				{days.map((day: Day) => (
-					<Card day={day} key={day.day} />
+				{list.map((day: Day) => (
+					<Card day={day} key={day.dt} list={[]} />
 				))}
 			</div>
 		</>

@@ -7,6 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { fetchCurrentWeather } from '../../store/thunks/fetchCurrentWeather';
 import s from './Header.module.scss';
 
+
 interface Props {}
 
 export const Header = (props: Props) => {
@@ -52,6 +53,7 @@ export const Header = (props: Props) => {
 			<div className={s.wrapper}>
 				<div className={s.search}>
 					<input
+						autoFocus
 						className={s.searchBar}
 						type="text"
 						placeholder="Поиск..."

@@ -9,12 +9,6 @@
 	box-shadow: $box-shadow;
 	border-radius: $border-radius;
 	margin-top: 30px;
-
-	.this__day_info_pressure {
-		position: absolute;
-		right: 100px;
-		top: 200px;
-	}
 }
 
 .item {
@@ -56,4 +50,5 @@
 	position: absolute;
 	top: 0;
 	right: 0;
+	opacity: 0.7;
 }

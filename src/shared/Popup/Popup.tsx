@@ -20,7 +20,7 @@ export const Popup = ({ active, setActive }: PopUpProps) => {
 				onClick={() => setActive(false)}
 			>
 				<div className={s.modalContent} onClick={(e) => e.stopPropagation()}>
-					<h1>fjgdsnvojndsFojnaEHPfbaSJNA"S</h1>
+					<h1>Показ более 5-ти дней погоды платный. Купи подписку,по брацки</h1>
 				</div>
 				<div className={s.close}>
 					<GlobalSvgSelector id="close" />

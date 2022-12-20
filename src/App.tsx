@@ -23,7 +23,6 @@ function App() {
 							/>
 						}
 					/>
-					{/* <Route path="/month-statistics" element={<MonthStatistic />} /> */}
 				</Routes>
 			</div>
 		</div>
